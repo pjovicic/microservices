@@ -1,6 +1,6 @@
 services:
-  postgres-customer:
-    container_name: postgres-customer
+  postgres:
+    container_name: postgres
     image: postgres
     environment:
       POSTGRES_USER: djaps
@@ -10,20 +10,6 @@ services:
       - postgres:/data/postgres
     ports:
       - "5432:5432"
-    networks:
-      - postgres
-    restart: unless-stopped
-  postgres-fraud:
-    container_name: postgres-fraud
-    image: postgres
-    environment:
-      POSTGRES_USER: djaps
-      POSTGRES_PASSWORD: djaps123
-      PGDATA: /data/postgres
-    volumes:
-      - postgres:/data/postgres
-    ports:
-      - "5433:5432"
     networks:
       - postgres
     restart: unless-stopped
@@ -49,3 +35,5 @@ networks:
 volumes:
   postgres:
   pgadmin:
+
+# shared databasse instance due to resources on local machine
