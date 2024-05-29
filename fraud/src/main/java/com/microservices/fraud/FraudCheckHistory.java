@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "fraud_check_history")
 public class FraudCheckHistory {
 
     @Id
