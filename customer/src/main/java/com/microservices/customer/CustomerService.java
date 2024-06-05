@@ -1,5 +1,6 @@
 package com.microservices.customer;
 
+import com.microservices.amqp.RabbitMQMessageProducer;
 import com.microservices.clients.fraud.FraudCheckResponse;
 import com.microservices.clients.fraud.FraudClient;
 import com.microservices.clients.notification.NotificationClient;
@@ -14,11 +15,9 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
 
-    private final RestTemplate restTemplate;
-
     private final FraudClient fraudClient;
 
-    private final NotificationClient notificationClient;
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -36,12 +35,14 @@ public class CustomerService {
         if (fraudCheckResponse != null && fraudCheckResponse.isFraudster()) {
             throw new IllegalStateException("Fraudster!");
         }
-        // todo: make it async i.e add to queue
-        notificationClient.sendNotification(new NotificationRequest(
+
+        NotificationRequest notificationRequest = new NotificationRequest(
                 customer.getId(),
                 customer.getEmail(),
                 String.format("Hi %s, welcome to our platform",
                         customer.getFirstName())
-        ));
+        );
+
+        rabbitMQMessageProducer.publish(notificationRequest, "internal.exchange", "internal.notification.routing-key");
     }
 }
