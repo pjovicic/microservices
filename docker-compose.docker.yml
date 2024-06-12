@@ -42,29 +42,6 @@ services:
       - "15672:15672"
     networks:
       - spring
-  eureka-server:
-    image: djaps10/eureka-server:latest
-    container_name: eureka-server
-    ports:
-      - "8761:8761"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-    depends_on:
-      - zipkin
-  apigw:
-    image: djaps10/apigw:latest
-    container_name: apigw
-    ports:
-      - "8083:8083"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-    depends_on:
-      - zipkin
-      - eureka-server
   customer:
     image: djaps10/customer:latest
     container_name: customer
@@ -79,7 +56,6 @@ services:
       - postgres
       - zipkin
       - rabbitmq
-      - eureka-server
   fraud:
     image: djaps10/fraud:latest
     container_name: fraud
@@ -93,7 +69,6 @@ services:
     depends_on:
       - postgres
       - zipkin
-      - eureka-server
       - rabbitmq
   notification:
     image: djaps10/notification:latest
@@ -108,7 +83,6 @@ services:
     depends_on:
       - postgres
       - zipkin
-      - eureka-server
       - rabbitmq
 
 networks:

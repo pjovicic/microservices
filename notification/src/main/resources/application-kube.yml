@@ -1,11 +1,11 @@
 server:
-  port: 8080
+  port: 8082
 spring:
   application:
-    name: customer
+    name: notification
   datasource:
     password: djaps123
-    url: jdbc:postgresql://postgres:5432/customer
+    url: jdbc:postgresql://postgres:5432/notification
     username: djaps
   jpa:
     hibernate:
@@ -19,10 +19,12 @@ spring:
     base-url: http://zipkin:9411
   rabbitmq:
     addresses: rabbitmq:5672
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka-server:8761/eureka
-    fetch-registry: true
-    register-with-eureka: true
-    enabled: false
+
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    notification: notification.queue
+  routing-keys:
+    internal-notification: internal.notification.routing-key
+
