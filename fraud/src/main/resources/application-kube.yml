@@ -4,7 +4,7 @@ spring:
   application:
     name: fraud
   datasource:
-    password: djaps123
+    password: password
     url: jdbc:postgresql://postgres:5432/fraud
     username: djaps
   jpa:

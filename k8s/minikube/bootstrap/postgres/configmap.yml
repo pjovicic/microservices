@@ -5,4 +5,4 @@ metadata:
 data:
   POSTGRES_DB: "microservices"
   POSTGRES_USER: "djaps"
-  POSTGRES_PASSWORD: "djaps10"
+  POSTGRES_PASSWORD: "password"

@@ -27,7 +27,6 @@ spec:
           volumeMounts:
             - mountPath: "/var/lib/postgresql/data"
               name: postgres
-              subPath: postgres
           envFrom:
             - configMapRef:
                 name: postgres-config
